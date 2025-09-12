@@ -1,0 +1,11 @@
+{
+  "rename": true,
+  "stringEncryption": true,
+  "controlFlow": "flattening",
+  "illegalBytecode": true,
+  "virtualization": false,
+  "watermark": "myobf-1.0",
+  "customClassLoader": true,
+  "antiDebug": true,
+  "polymorphic": true
+}
