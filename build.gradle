@@ -1,0 +1,62 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+}
+
+group = 'com.myobf'
+version = '1.0.0'
+
+repositories {
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    // ASM for Java bytecode manipulation
+    implementation 'org.ow2.asm:asm:9.6'
+    implementation 'org.ow2.asm:asm-tree:9.6'
+    implementation 'org.ow2.asm:asm-commons:9.6'
+    implementation 'org.ow2.asm:asm-analysis:9.6'
+
+    // Coley's analysis library for frame analysis
+    // implementation 'me.coley:analysis:1.1.0' // Temporarily disabled
+
+    // Gson for parsing the configuration file
+    implementation 'com.google.code.gson:gson:2.10.1'
+
+    // Apache Commons for utilities
+    implementation 'org.apache.commons:commons-lang3:3.14.0'
+    implementation 'commons-io:commons-io:2.15.1'
+
+    // Picocli for a powerful command-line interface
+    implementation 'info.picocli:picocli:4.7.5'
+    annotationProcessor 'info.picocli:picocli-codegen:4.7.5'
+
+    // Testing dependencies
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+application {
+    mainClass = 'com.myobf.MyObf'
+}
+
+shadowJar {
+    archiveBaseName = 'myobf'
+    archiveClassifier = null
+    archiveVersion = null
+}
+
+tasks.withType(JavaCompile) {
+    options.compilerArgs += "-Aproject=${project.group}/${project.name}"
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
